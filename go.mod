@@ -6,7 +6,7 @@ require (
 	github.com/jamf/regatta v0.2.1
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.4
-	google.golang.org/grpc v1.57.0
+	google.golang.org/grpc v1.58.2
 )
 
 require (
