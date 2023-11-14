@@ -8,31 +8,14 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type logger struct{}
-
-func (p logger) Infof(_ string, _ ...any)  {}
-func (p logger) Debugf(_ string, _ ...any) {}
-func (p logger) Warnf(_ string, _ ...any)  {}
-func (p logger) Errorf(_ string, _ ...any) {}
-
 func connect(cmd *cobra.Command, _ []string) error {
 	// Allow for mocking in tests.
 	if regatta == nil {
-		cc, err := client.NewClientConfig(&client.ConfigSpec{
-			Logger:    logger{},
-			Endpoints: []string{endpointOption},
-			Secure: &client.SecureConfig{
-				Cacert:             certOption,
-				InsecureSkipVerify: insecureOption,
-			},
-			DialTimeout: dialTimeout,
-		})
-		if err != nil {
-			cmd.PrintErrln("There was an error, with config of connection to Regatta.")
-			return err
-		}
-		cc.DialOptions = append(cc.DialOptions, grpc.WithBlock(), grpc.WithReturnConnectionError())
-		cl, err := client.New(cc)
+		cl, err := client.New(
+			&client.ConfigSpec{Endpoints: []string{endpointOption}, DialTimeout: dialTimeout},
+			client.WithSecureConfig(&client.SecureConfig{Cacert: certOption, InsecureSkipVerify: insecureOption}),
+			client.WithDialOptions(grpc.WithBlock(), grpc.WithReturnConnectionError()),
+		)
 		if err != nil {
 			cmd.PrintErrln("There was an error, while establishing connection to Regatta.")
 			return err
