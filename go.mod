@@ -3,7 +3,7 @@ module github.com/tantalor93/regatta-client
 go 1.21
 
 require (
-	github.com/jamf/regatta-go v0.1.2
+	github.com/jamf/regatta-go v0.1.4
 	github.com/spf13/cobra v1.8.0
 	github.com/stretchr/testify v1.8.4
 	google.golang.org/grpc v1.59.0
