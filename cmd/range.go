@@ -157,10 +157,9 @@ func keyAndOptsForRange(args []string) (string, []client.OpOption) {
 				return zero, []client.OpOption{client.WithRange(zero), client.WithLimit(rangeLimit)}
 			}
 			// prefix search
-			return key, []client.OpOption{client.WithRange(client.GetPrefixRangeEnd(key)), client.WithLimit(rangeLimit)}
+			return key, []client.OpOption{client.WithPrefix(), client.WithLimit(rangeLimit)}
 		}
-		// get by ID - seems there is a bug in iterator API as it refuses to return data by single matching key
-		return key, []client.OpOption{client.WithFromKey(), client.WithLimit(1)}
+		return key, []client.OpOption{}
 	}
 	// get all
 	return zero, []client.OpOption{client.WithRange(zero), client.WithLimit(rangeLimit)}
