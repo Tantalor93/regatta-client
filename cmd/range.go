@@ -159,6 +159,7 @@ func keyAndOptsForRange(args []string) (string, []client.OpOption) {
 			// prefix search
 			return key, []client.OpOption{client.WithPrefix(), client.WithLimit(rangeLimit)}
 		}
+		// get by ID
 		return key, []client.OpOption{}
 	}
 	// get all
